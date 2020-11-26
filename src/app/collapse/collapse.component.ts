@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {User} from '../models/User'
 
 @Component({
   selector: 'app-collapse',
@@ -8,19 +9,22 @@ export class CollapseComponent {
 
   //Properties
 
-  firstName = 'Jonny';
-  lastName = 'Lutz';
-  public isCollapsed = false;
+  user: User;
+  public isCollapsed: false;
 
   //Methods
   constructor() {
-    console.log('HELLO FROM COLLAPSE COMPONENT')
-    this.sayHello()
+    this.user = {
+      firstName: "Mike",
+      lastName: "Smith", 
+      age: 50,
+      address: {
+        city: 'Columbus', 
+        state: "Ohio"
+      }
+    }
   }
-
-  sayHello() {
-    console.log(`Hello ${this.firstName}`)
-  }
-
-
 }
+
+
+
