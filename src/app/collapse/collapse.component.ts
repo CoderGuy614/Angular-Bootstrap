@@ -9,6 +9,7 @@ export class CollapseComponent implements OnInit {
 
   //Properties
   users: User[];
+  loaded: boolean = false;
   public isCollapsed: false;
 
   //Methods
@@ -18,29 +19,35 @@ export class CollapseComponent implements OnInit {
     this.users.push(user)
   }
 
+  loadUsers() {
+    setTimeout(() => this.loaded = true, 2000)
+  }
+
   ngOnInit() {
-    this.users = [
-      {
-        firstName: "Linda",
-        lastName: 'Lutz',
-        age: 55
-      },
-      {
-        firstName: "Jim",
-        lastName: 'Lutz',
-        age: 60
-      },
-      {
-        firstName: "Jonny",
-        lastName: 'Lutz',
-        age: 35
-      }
-    ]
-    this.addUser({
-      firstName: "Mike",
-      lastName: 'Smith',
-      age: 22
-    })
+    // this.users = [
+    //   {
+    //     firstName: "Linda",
+    //     lastName: 'Lutz',
+    //     age: 55
+    //   },
+    //   {
+    //     firstName: "Jim",
+    //     lastName: 'Lutz',
+    //     age: 60
+    //   },
+    //   {
+    //     firstName: "Jonny",
+    //     lastName: 'Lutz',
+    //     age: 35
+    //   }
+    // ]
+    // this.addUser({
+    //   firstName: "Mike",
+    //   lastName: 'Smith',
+    //   age: 22
+    // })
+    this.users=[]
+    this.loadUsers()
   }
 }
 
