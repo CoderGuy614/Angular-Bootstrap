@@ -3,7 +3,7 @@
       aria-controls="collapseExample">
       Toggle
     </button>
-    <button [ngClass]='currentClasses' [disabled]="!enableAdd" class="btn btn-primary btn-block">Add New User</button>
+    <button [ngClass]='currentClasses' [disabled]="!enableAdd" class="btn btn-primary btn-block" (click)="addUser({firstName: 'Mary', lastName: 'Williams', isActive: 'true', hide: true})">Add New User</button>
   </p>
   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
     <div class="card">
@@ -15,11 +15,14 @@
                   <img *ngIf="user.image" class='img-fluid' [src]="user.image" alt="">
               </div>
               <div class="col-sm-8">
-                <h3 [ngStyle]='currentStyles'>{{user.firstName + " " + user.lastName}}</h3>
-                <li class="list-group-item">Balance: {{user.balance | currency:"GBP":"code"}}</li>
-                <li class="list-group-item">Percent: {{ 0.5 | percent}}</li>
-                <li class="list-group-item">Joined on: {{user.registered | date}}</li>
-                <li class="list-group-item" ngNonBindable>Number: {{ 5 | number: "1.2"}}</li>
+                <h3 [ngStyle]='currentStyles'>{{user.firstName + " " + user.lastName}} <small *ngIf="user.balance && user.registered"><button class='btn btn-dark btn-sm' (click)="toggleHide(user)"><i [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"></i></button></small></h3>
+                <ul *ngIf="!user.hide">
+                  <li class="list-group-item">Balance: {{user.balance | currency:"GBP":"code"}}</li>
+                  <li class="list-group-item">Percent: {{ 0.5 | percent}}</li>
+                  <li class="list-group-item">Joined on: {{user.registered | date}}</li>
+                  <li class="list-group-item" ngNonBindable>Number: {{ 5 | number: "1.2"}}</li>
+                </ul>
+
               </div>
             </div>
           </li>
