@@ -16,6 +16,10 @@
               </div>
               <div class="col-sm-8">
                 <h3 [ngStyle]='currentStyles'>{{user.firstName + " " + user.lastName}}</h3>
+                <li class="list-group-item">Balance: {{user.balance | currency:"GBP":"code"}}</li>
+                <li class="list-group-item">Percent: {{ 0.5 | percent}}</li>
+                <li class="list-group-item">Joined on: {{user.registered | date}}</li>
+                <li class="list-group-item" ngNonBindable>Number: {{ 5 | number: "1.2"}}</li>
               </div>
             </div>
           </li>

@@ -3,6 +3,9 @@ export interface User {
       lastName: string, 
       age: number,
       image?: string,
-      isActive?: boolean
+      isActive?: boolean,
+      balance?: number,
+      registered?: any
+
   }
   

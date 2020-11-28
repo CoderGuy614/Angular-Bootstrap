@@ -46,14 +46,18 @@ export class CollapseComponent implements OnInit {
         lastName: 'Lutz',
         age: 55,
         image: "http://lorempixel.com/600/600/people/3",
-        isActive: false
+        isActive: false,
+        balance: 100,
+        registered: new Date('01/02/2018 08:30:00')
       },
       {
         firstName: "Jim",
         lastName: 'Lutz',
         age: 60,
         image: "http://lorempixel.com/600/600/people/2",
-        isActive: true
+        balance: 200,
+        isActive: true,
+        registered: new Date('02/02/2018 08:30:00')
         
       },
       {
@@ -61,15 +65,11 @@ export class CollapseComponent implements OnInit {
         lastName: 'Lutz',
         age: 35,
         image: "http://lorempixel.com/600/600/people/1",
+        balance: 300,
+        registered: new Date('03/02/2018 08:30:00'),
         isActive: true
       }
     ]
-    this.addUser({
-      firstName: "Mike",
-      lastName: 'Smith',
-      age: 22
-    })
- 
     this.loadUsers()
     this.setCurrentClasses()
     this.setCurrentStyles()
