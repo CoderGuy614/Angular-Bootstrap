@@ -12,6 +12,7 @@ export class CollapseComponent implements OnInit {
   loaded: boolean = false;
   enableAdd: boolean = true;
   currentClasses: {};
+  currentStyles: {};
   public isCollapsed: false;
 
   //Methods
@@ -30,6 +31,13 @@ export class CollapseComponent implements OnInit {
       'btn-success': this.enableAdd
     }
   }
+
+  setCurrentStyles() {
+    this.currentStyles = {
+      'padding-top': this.enableAdd ? '10px' : '20px'
+    }
+  }
+
 
   ngOnInit() {
     this.users = [
@@ -64,6 +72,7 @@ export class CollapseComponent implements OnInit {
  
     this.loadUsers()
     this.setCurrentClasses()
+    this.setCurrentStyles()
   }
 }
 

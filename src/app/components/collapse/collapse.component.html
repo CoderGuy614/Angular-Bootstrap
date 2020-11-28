@@ -9,13 +9,13 @@
     <div class="card">
       <div class="card-body">
         <ul class='list-group' *ngIf="loaded && users?.length > 0">
-          <li class='list-group-item' [class.bg-light]="user.isActive" *ngFor='let user of users'>
+          <li [style.border-color]="user.isActive ? 'green' : '' " class='list-group-item mb-3 p-2' [class.bg-light]="user.isActive" *ngFor='let user of users'>
             <div class="row">
               <div class="col-sm-4">
                   <img *ngIf="user.image" class='img-fluid' [src]="user.image" alt="">
               </div>
               <div class="col-sm-8">
-                <h3>{{user.firstName + " " + user.lastName}}</h3>
+                <h3 [ngStyle]='currentStyles'>{{user.firstName + " " + user.lastName}}</h3>
               </div>
             </div>
           </li>
