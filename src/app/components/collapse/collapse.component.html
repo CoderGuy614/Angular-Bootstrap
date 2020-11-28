@@ -3,13 +3,13 @@
       aria-controls="collapseExample">
       Toggle
     </button>
-    <button [disabled]="!enableAdd" class="btn btn-primary btn-block">Add New User</button>
+    <button [ngClass]='currentClasses' [disabled]="!enableAdd" class="btn btn-primary btn-block">Add New User</button>
   </p>
   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
     <div class="card">
       <div class="card-body">
         <ul class='list-group' *ngIf="loaded && users?.length > 0">
-          <li class='list-group-item' *ngFor='let user of users'>
+          <li class='list-group-item' [class.bg-light]="user.isActive" *ngFor='let user of users'>
             <div class="row">
               <div class="col-sm-4">
                   <img *ngIf="user.image" class='img-fluid' [src]="user.image" alt="">
