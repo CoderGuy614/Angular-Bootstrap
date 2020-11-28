@@ -7,8 +7,8 @@
   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
     <div class="card">
       <div class="card-body">
-        <ul *ngIf="loaded && users?.length > 0">
-          <li *ngFor='let user of users'>{{user.firstName}} <p *ngIf="user.age > 50">is {{user.age}} years old.</p></li>
+        <ul class='list-group' *ngIf="loaded && users?.length > 0">
+          <li class='list-group-item' *ngFor='let user of users'>{{user.firstName}} </li>
         </ul>
         <h4 *ngIf="loaded && users?.length == 0">No Users Found</h4>
         <h4 *ngIf="!loaded">Loading Users...</h4>
