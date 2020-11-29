@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/User';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-collapse',
@@ -13,7 +14,7 @@ export class CollapseComponent implements OnInit {
     lastName: '',
     age: null,
   };
-  loaded: boolean = false;
+  loaded: boolean = true;
   enableAdd: boolean = true;
   currentClasses: {};
   currentStyles: {};
@@ -23,11 +24,7 @@ export class CollapseComponent implements OnInit {
   public isCollapsed: false;
 
   //Methods
-  constructor() {}
-
-  loadUsers() {
-    setTimeout(() => (this.loaded = true), 2000);
-  }
+  constructor(private dataService: DataService) {}
 
   setCurrentClasses() {
     this.currentClasses = {
@@ -51,45 +48,13 @@ export class CollapseComponent implements OnInit {
     } else {
       value.image = `http://lorempixel.com/600/600/people/${this.photoCount}`;
       this.photoCount += 1;
-      this.users.unshift(value);
+      this.dataService.addUser(value);
       this.form.reset();
     }
   }
 
   ngOnInit() {
-    this.users = [
-      {
-        firstName: 'Linda',
-        lastName: 'Lutz',
-        age: 55,
-        image: 'http://lorempixel.com/600/600/people/3',
-        isActive: false,
-        balance: 100,
-        registered: new Date('01/02/2018 08:30:00'),
-        hide: true,
-      },
-      {
-        firstName: 'Jim',
-        lastName: 'Lutz',
-        age: 60,
-        image: 'http://lorempixel.com/600/600/people/2',
-        balance: 200,
-        isActive: true,
-        registered: new Date('02/02/2018 08:30:00'),
-        hide: true,
-      },
-      {
-        firstName: 'Jonny',
-        lastName: 'Lutz',
-        age: 35,
-        image: 'http://lorempixel.com/600/600/people/1',
-        balance: 300,
-        registered: new Date('03/02/2018 08:30:00'),
-        isActive: true,
-        hide: true,
-      },
-    ];
-    this.loadUsers();
+    this.users = this.dataService.getUsers();
     this.setCurrentClasses();
     this.setCurrentStyles();
   }
