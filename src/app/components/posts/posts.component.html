@@ -10,7 +10,7 @@
     <h3>{{ post.title }}</h3>
     <p>{{ post.body }}</p>
     <hr />
-    <button class="btn btn-danger mx-1">
+    <button (click)="removePost(post)" class="btn btn-danger mx-1">
       <i class="fa fa-remove"></i>
     </button>
     <button class="btn btn-dark mx-1" (click)="editPost(post)">
