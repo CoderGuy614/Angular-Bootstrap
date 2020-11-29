@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../models/User'
+import { User } from '../../models/User';
 
 @Component({
   selector: 'app-collapse',
-  templateUrl: './collapse.component.html'
+  templateUrl: './collapse.component.html',
 })
 export class CollapseComponent implements OnInit {
-
   //Properties
   users: User[];
   user: User = {
     firstName: '',
     lastName: '',
-    age: null
+    age: null,
   };
   loaded: boolean = false;
   enableAdd: boolean = true;
@@ -26,84 +25,75 @@ export class CollapseComponent implements OnInit {
   constructor() {}
 
   addUser() {
-
-    this.user.image = `http://lorempixel.com/600/600/people/${this.photoCount}`
+    this.user.image = `http://lorempixel.com/600/600/people/${this.photoCount}`;
     this.photoCount += 1;
-    this.users.unshift(this.user)
+    this.users.unshift(this.user);
     this.user = {
-      firstName: "",
-      lastName: "", 
-      age: null
-    }
+      firstName: '',
+      lastName: '',
+      age: null,
+    };
   }
 
   loadUsers() {
-    setTimeout(() => this.loaded = true, 2000)
+    setTimeout(() => (this.loaded = true), 2000);
   }
 
   setCurrentClasses() {
     this.currentClasses = {
-      'btn-success': this.enableAdd
-    }
+      'btn-success': this.enableAdd,
+    };
   }
 
   setCurrentStyles() {
     this.currentStyles = {
-      'padding-top': this.enableAdd ? '10px' : '20px'
-    }
+      'padding-top': this.enableAdd ? '10px' : '20px',
+    };
   }
 
   toggleHide(user: User) {
-    user.hide = !user.hide
+    user.hide = !user.hide;
   }
 
-  onSubmit(e) {
-    e.preventDefault()
-    this.addUser()
+  onSubmit() {
+    this.addUser();
   }
-
-
-
 
   ngOnInit() {
     this.users = [
       {
-        firstName: "Linda",
+        firstName: 'Linda',
         lastName: 'Lutz',
         age: 55,
-        image: "http://lorempixel.com/600/600/people/3",
+        image: 'http://lorempixel.com/600/600/people/3',
         isActive: false,
         balance: 100,
         registered: new Date('01/02/2018 08:30:00'),
-        hide: true
+        hide: true,
       },
       {
-        firstName: "Jim",
+        firstName: 'Jim',
         lastName: 'Lutz',
         age: 60,
-        image: "http://lorempixel.com/600/600/people/2",
+        image: 'http://lorempixel.com/600/600/people/2',
         balance: 200,
         isActive: true,
         registered: new Date('02/02/2018 08:30:00'),
-        hide: true
-        
+        hide: true,
       },
       {
-        firstName: "Jonny",
+        firstName: 'Jonny',
         lastName: 'Lutz',
         age: 35,
-        image: "http://lorempixel.com/600/600/people/1",
+        image: 'http://lorempixel.com/600/600/people/1',
         balance: 300,
         registered: new Date('03/02/2018 08:30:00'),
         isActive: true,
-        hide: true
-      }
-    ]
-    this.loadUsers()
-    this.setCurrentClasses()
-    this.setCurrentStyles()
+        hide: true,
+      },
+    ];
+    this.loadUsers();
+    this.setCurrentClasses();
+    this.setCurrentStyles();
   }
 }
-
-
-

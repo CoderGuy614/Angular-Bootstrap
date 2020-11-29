@@ -1,59 +1,152 @@
 <p>
-    <button type="button" class="btn btn-secondary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
-      aria-controls="collapseExample">
-      Show Users
-    </button>
-  </p>
-  
-  <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-    <button [ngClass]='currentClasses' [disabled]="!enableAdd" class="btn btn-primary btn-block mb-2" (click)="showUserForm = !showUserForm">Add New User</button>
-    <div *ngIf="showUserForm" class="card card-body mb-2">
-      <h2>Add a User</h2>
-      <form (submit)="onSubmit($event)">
-        <div class="form-group">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="collapse.toggle()"
+    [attr.aria-expanded]="!isCollapsed"
+    aria-controls="collapseExample"
+  >
+    Show Users
+  </button>
+</p>
+
+<div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+  <button
+    [ngClass]="currentClasses"
+    [disabled]="!enableAdd"
+    class="btn btn-primary btn-block mb-2"
+    (click)="showUserForm = !showUserForm"
+  >
+    Add New User
+  </button>
+  <div *ngIf="showUserForm" class="card card-body mb-2">
+    <h2>Add a User</h2>
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+      <div class="form-group">
         <label>First Name</label>
-        <input type="text" class="form-control" name='firstName' [(ngModel)]="user.firstName">
-        <label>Last Name</label>
-        <input type="text" class="form-control" name='lastName' [(ngModel)]="user.lastName">
-        <label for="">Age</label>
-        <input type="number" class="form-control" name='age' [(ngModel)]="user.age">
-        <button [disabled]="user.firstName == '' || user.lastName ==  ''" class="btn btn-secondary btn-block mt-2">Submit</button>
+        <input
+          type="text"
+          class="form-control"
+          name="firstName"
+          [(ngModel)]="user.firstName"
+          [ngClass]="{
+            'is-invalid': userFirstName.errors && userFirstName.touched
+          }"
+          #userFirstName="ngModel"
+          required
+          minlength="3"
+        />
+        <div
+          class="invalid-feedback"
+          [hidden]="!userFirstName.errors?.required"
+        >
+          First Name is Required
+        </div>
+        <div
+          class="invalid-feedback"
+          [hidden]="!userFirstName.errors?.minlength"
+        >
+          Must be at least 3 Characters
+        </div>
       </div>
-      </form>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <ul class='list-group' *ngIf="loaded && users?.length > 0">
-          <li [style.border-color]="user.isActive ? 'green' : '' " class='list-group-item mb-3 p-2' [class.bg-light]="user.isActive" *ngFor='let user of users'>
-            <div class="row">
-              <div class="col-sm-4">
-                  <img *ngIf="user.image" class='img-fluid' [src]="user.image" alt="">
-              </div>
-              <div class="col-sm-8">
-                <h3 [ngStyle]='currentStyles'>{{user.firstName + " " + user.lastName}} <small *ngIf="user.balance && user.registered"><button class='btn btn-dark btn-sm' (click)="toggleHide(user)"><i [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"></i></button></small></h3>
-                <ul *ngIf="!user.hide">
-                  <li class="list-group-item">Age: {{user.age}}</li>
-                  <!-- <li class="list-group-item">Balance: {{user.balance | currency:"GBP":"code"}}</li>
+
+      <div class="form-group">
+        <label>Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lastName"
+          #userLastName="ngModel"
+          [(ngModel)]="user.lastName"
+          [ngClass]="{
+            'is-invalid': userLastName.errors && userLastName.touched
+          }"
+          required
+          minlength="3"
+        />
+        <div class="invalid-feedback" [hidden]="!userLastName.errors?.required">
+          Last Name is Required
+        </div>
+        <div
+          class="invalid-feedback"
+          [hidden]="!userLastName.errors?.minlength"
+        >
+          Must be at least 3 Characters
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Age</label>
+        <input
+          type="number"
+          class="form-control"
+          name="age"
+          [(ngModel)]="user.age"
+          #userAge="ngModel"
+          [ngClass]="{
+            'is-invalid': userAge.errors && userAge.touched
+          }"
+          required
+        />
+        <div class="invalid-feedback" [hidden]="!userAge.errors?.required">
+          Age is Required
+        </div>
+      </div>
+
+      <button
+        [disabled]="!userForm.form.valid"
+        class="btn btn-secondary btn-block mt-2"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <ul class="list-group" *ngIf="loaded && users?.length > 0">
+        <li
+          [style.border-color]="user.isActive ? 'green' : ''"
+          class="list-group-item mb-3 p-2"
+          [class.bg-light]="user.isActive"
+          *ngFor="let user of users"
+        >
+          <div class="row">
+            <div class="col-sm-4">
+              <img
+                *ngIf="user.image"
+                class="img-fluid"
+                [src]="user.image"
+                alt=""
+              />
+            </div>
+            <div class="col-sm-8">
+              <h3 [ngStyle]="currentStyles">
+                {{ user.firstName + " " + user.lastName }}
+                <small *ngIf="user.balance && user.registered"
+                  ><button
+                    class="btn btn-dark btn-sm"
+                    (click)="toggleHide(user)"
+                  >
+                    <i
+                      [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"
+                    ></i></button
+                ></small>
+              </h3>
+              <ul *ngIf="!user.hide">
+                <li class="list-group-item">Age: {{ user.age }}</li>
+                <!-- <li class="list-group-item">Balance: {{user.balance | currency:"GBP":"code"}}</li>
                   <li class="list-group-item">Percent: {{ 0.5 | percent}}</li>
                   <li class="list-group-item">Joined on: {{user.registered | date}}</li>
                   <li class="list-group-item" ngNonBindable>Number: {{ 5 | number: "1.2"}}</li> -->
-                </ul>
-
-              </div>
+              </ul>
             </div>
-          </li>
-        </ul>
-        <h4 *ngIf="loaded && users?.length == 0">No Users Found</h4>
-        <h4 *ngIf="!loaded">Loading Users...</h4>
-      </div>
+          </div>
+        </li>
+      </ul>
+      <h4 *ngIf="loaded && users?.length == 0">No Users Found</h4>
+      <h4 *ngIf="!loaded">Loading Users...</h4>
     </div>
   </div>
-  
-
-
+</div>
 
 <!-- <ng-template #noUsers>No Users Found</ng-template>
 <ng-template #loadingUsers>Loading Users...</ng-template> -->
-
- 
-  
