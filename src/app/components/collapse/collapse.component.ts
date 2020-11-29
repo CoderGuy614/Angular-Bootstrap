@@ -9,17 +9,32 @@ export class CollapseComponent implements OnInit {
 
   //Properties
   users: User[];
+  user: User = {
+    firstName: '',
+    lastName: '',
+    age: null
+  };
   loaded: boolean = false;
   enableAdd: boolean = true;
   currentClasses: {};
   currentStyles: {};
+  showUserForm: boolean = false;
+  photoCount: number = 4;
   public isCollapsed: false;
 
   //Methods
   constructor() {}
 
-  addUser(user: User) {
-    this.users.push(user)
+  addUser() {
+
+    this.user.image = `http://lorempixel.com/600/600/people/${this.photoCount}`
+    this.photoCount += 1;
+    this.users.unshift(this.user)
+    this.user = {
+      firstName: "",
+      lastName: "", 
+      age: null
+    }
   }
 
   loadUsers() {
@@ -40,6 +55,11 @@ export class CollapseComponent implements OnInit {
 
   toggleHide(user: User) {
     user.hide = !user.hide
+  }
+
+  onSubmit(e) {
+    e.preventDefault()
+    this.addUser()
   }
 
 

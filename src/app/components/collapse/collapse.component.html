@@ -1,11 +1,26 @@
 <p>
     <button type="button" class="btn btn-secondary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
       aria-controls="collapseExample">
-      Toggle
+      Show Users
     </button>
-    <button [ngClass]='currentClasses' [disabled]="!enableAdd" class="btn btn-primary btn-block" (click)="addUser({firstName: 'Mary', lastName: 'Williams', isActive: 'true', hide: true})">Add New User</button>
   </p>
+  
   <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+    <button [ngClass]='currentClasses' [disabled]="!enableAdd" class="btn btn-primary btn-block mb-2" (click)="showUserForm = !showUserForm">Add New User</button>
+    <div *ngIf="showUserForm" class="card card-body mb-2">
+      <h2>Add a User</h2>
+      <form (submit)="onSubmit($event)">
+        <div class="form-group">
+        <label>First Name</label>
+        <input type="text" class="form-control" name='firstName' [(ngModel)]="user.firstName">
+        <label>Last Name</label>
+        <input type="text" class="form-control" name='lastName' [(ngModel)]="user.lastName">
+        <label for="">Age</label>
+        <input type="number" class="form-control" name='age' [(ngModel)]="user.age">
+        <button [disabled]="user.firstName == '' || user.lastName ==  ''" class="btn btn-secondary btn-block mt-2">Submit</button>
+      </div>
+      </form>
+    </div>
     <div class="card">
       <div class="card-body">
         <ul class='list-group' *ngIf="loaded && users?.length > 0">
@@ -17,10 +32,11 @@
               <div class="col-sm-8">
                 <h3 [ngStyle]='currentStyles'>{{user.firstName + " " + user.lastName}} <small *ngIf="user.balance && user.registered"><button class='btn btn-dark btn-sm' (click)="toggleHide(user)"><i [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"></i></button></small></h3>
                 <ul *ngIf="!user.hide">
-                  <li class="list-group-item">Balance: {{user.balance | currency:"GBP":"code"}}</li>
+                  <li class="list-group-item">Age: {{user.age}}</li>
+                  <!-- <li class="list-group-item">Balance: {{user.balance | currency:"GBP":"code"}}</li>
                   <li class="list-group-item">Percent: {{ 0.5 | percent}}</li>
                   <li class="list-group-item">Joined on: {{user.registered | date}}</li>
-                  <li class="list-group-item" ngNonBindable>Number: {{ 5 | number: "1.2"}}</li>
+                  <li class="list-group-item" ngNonBindable>Number: {{ 5 | number: "1.2"}}</li> -->
                 </ul>
 
               </div>
