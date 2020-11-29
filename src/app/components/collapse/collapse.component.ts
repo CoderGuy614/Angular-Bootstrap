@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/User';
-import { DataService } from '../../services/data.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-collapse',
@@ -25,7 +25,7 @@ export class CollapseComponent implements OnInit {
   public isCollapsed: false;
 
   //Methods
-  constructor(private dataService: DataService) {}
+  constructor(private userService: UserService) {}
 
   setCurrentClasses() {
     this.currentClasses = {
@@ -49,16 +49,16 @@ export class CollapseComponent implements OnInit {
     } else {
       value.image = `http://lorempixel.com/600/600/people/${this.photoCount}`;
       this.photoCount += 1;
-      this.dataService.addUser(value);
+      this.userService.addUser(value);
       this.form.reset();
     }
   }
 
   ngOnInit() {
-    this.dataService.getUsers().subscribe((users) => {
+    this.userService.getUsers().subscribe((users) => {
       this.users = users;
     });
-    this.dataService.getData().subscribe((data) => {
+    this.userService.getData().subscribe((data) => {
       console.log(data);
     });
     this.setCurrentClasses();
