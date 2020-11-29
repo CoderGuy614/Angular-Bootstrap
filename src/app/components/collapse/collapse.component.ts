@@ -20,6 +20,7 @@ export class CollapseComponent implements OnInit {
   currentStyles: {};
   showUserForm: boolean = false;
   photoCount: number = 4;
+  data: any;
   @ViewChild('userForm') form: any;
   public isCollapsed: false;
 
@@ -54,7 +55,12 @@ export class CollapseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.users = this.dataService.getUsers();
+    this.dataService.getUsers().subscribe((users) => {
+      this.users = users;
+    });
+    this.dataService.getData().subscribe((data) => {
+      console.log(data);
+    });
     this.setCurrentClasses();
     this.setCurrentStyles();
   }
