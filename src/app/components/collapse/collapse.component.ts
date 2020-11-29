@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/User';
 
 @Component({
@@ -19,21 +19,11 @@ export class CollapseComponent implements OnInit {
   currentStyles: {};
   showUserForm: boolean = false;
   photoCount: number = 4;
+  @ViewChild('userForm') form: any;
   public isCollapsed: false;
 
   //Methods
   constructor() {}
-
-  addUser() {
-    this.user.image = `http://lorempixel.com/600/600/people/${this.photoCount}`;
-    this.photoCount += 1;
-    this.users.unshift(this.user);
-    this.user = {
-      firstName: '',
-      lastName: '',
-      age: null,
-    };
-  }
 
   loadUsers() {
     setTimeout(() => (this.loaded = true), 2000);
@@ -55,8 +45,15 @@ export class CollapseComponent implements OnInit {
     user.hide = !user.hide;
   }
 
-  onSubmit() {
-    this.addUser();
+  onSubmit({ value, valid }: { value: User; valid: boolean }) {
+    if (!valid) {
+      console.log('FORM IS NOT VALID');
+    } else {
+      value.image = `http://lorempixel.com/600/600/people/${this.photoCount}`;
+      this.photoCount += 1;
+      this.users.unshift(value);
+      this.form.reset();
+    }
   }
 
   ngOnInit() {
